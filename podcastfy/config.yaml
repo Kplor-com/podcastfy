@@ -1,5 +1,6 @@
 content_generator:
   llm_model: "gemini-1.5-pro-latest"
+  local_model: "llama-3.1-70b"  #this has been altered
   meta_llm_model: "gemini-1.5-pro-latest"
   max_output_tokens: 8192
   prompt_template: "souzatharsis/podcastfy_multimodal_cleanmarkup"

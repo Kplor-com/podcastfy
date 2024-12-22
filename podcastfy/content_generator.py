@@ -22,6 +22,11 @@ from podcastfy.utils.config import load_config
 import logging
 from langchain.prompts import HumanMessagePromptTemplate
 from abc import ABC, abstractmethod
+from langchain_ollama import ChatOllama
+from local_llama_model import LlamaFreeChat
+import sys
+import os
+sys.path.append(os.getcwd())
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +62,8 @@ class LLMBackend:
         }
 
         if is_local:
-            self.llm = Llamafile() # replace with ollama
+            #self.llm = ChatOllama(model=self.model_name,temperature=self.temperature)
+            self.llm = LlamaFreeChat(model=self.model_name,temperature=self.temperature)
         elif (
             "gemini" in self.model_name.lower()
         ):  # keeping original gemini as a special case while we build confidence on LiteLLM
@@ -739,7 +745,7 @@ class ContentGenerator:
         if not model_name:
             model_name = self.content_generator_config.get("llm_model")
         if is_local:
-            model_name = "User provided local model"
+            model_name = self.content_generator_config.get("local_model")
 
         llm_backend = LLMBackend(
             is_local=is_local,

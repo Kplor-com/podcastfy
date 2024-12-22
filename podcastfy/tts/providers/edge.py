@@ -26,7 +26,9 @@ class EdgeTTS(TTSProvider):
         nest_asyncio.apply()
         
         async def _generate():
-            communicate = edge_tts.Communicate(text, voice)
+            #The next line has been altered
+            communicate = edge_tts.Communicate(text, voice, rate="+10%", pitch="+20Hz")
+            
             # Create a temporary file with proper context management
             with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as tmp_file:
                 temp_path = tmp_file.name
